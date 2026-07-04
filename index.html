@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contrast Break Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #14181f;
+    --muted: #5a6470;
+    --line: #c8ced6;
+    --line-soft: #e4e8ec;
+    --accent: #0f8f86;      /* prints dark enough to read */
+    --work-bg: #ffffff;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .sheet {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 32px 40px 40px;
+  }
+
+  /* ---- Header ---- */
+  header {
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 14px;
+    margin-bottom: 22px;
+  }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 6px;
+    font-weight: 600;
+  }
+  h1 {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 27px;
+    line-height: 1.1;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  h1 svg { flex: none; }
+  .sub {
+    margin: 8px 0 0;
+    font-size: 13.5px;
+    color: var(--muted);
+    max-width: 60ch;
+  }
+
+  /* ---- Icons ---- */
+  .ic {
+    width: 17px;
+    height: 17px;
+    stroke: var(--accent);
+    stroke-width: 1.7;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vertical-align: -3px;
+    flex: none;
+  }
+  .axis-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* ---- Table ---- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 4px 0 26px;
+    font-size: 13px;
+  }
+  thead th {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--muted);
+    padding: 0 12px 8px;
+    border-bottom: 1.5px solid var(--ink);
+    font-weight: 600;
+  }
+  tbody td {
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--line-soft);
+    vertical-align: top;
+  }
+  tbody tr:last-child td { border-bottom: 1px solid var(--line); }
+
+  .dim {
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 600;
+    font-size: 12.5px;
+    white-space: nowrap;
+    width: 1%;
+  }
+  .work {
+    color: var(--muted);
+    background: var(--work-bg);
+    width: 38%;
+  }
+  .flip { width: 44%; }
+  .flip strong { font-weight: 600; }
+
+  .col-dim  { width: 18%; }
+
+  /* ---- Examples ---- */
+  .examples-h {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 6px;
+    margin: 0 0 14px;
+  }
+  .examples {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .card {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    padding: 12px 14px;
+    border-radius: 2px;
+  }
+  .card h3 {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    margin: 0 0 6px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card h3 .ic { width: 16px; height: 16px; }
+  .card p {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  .card .tag {
+    display: inline-block;
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 8px;
+  }
+
+  /* axes-flipped dot meter on cards */
+  .meter {
+    display: inline-flex;
+    gap: 3px;
+    margin-left: 8px;
+    vertical-align: 1px;
+  }
+  .meter i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: 1px solid var(--accent);
+    display: inline-block;
+  }
+  .meter i.on { background: var(--accent); }
+
+  footer {
+    margin-top: 26px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line-soft);
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ---- Print ---- */
+  @page { size: letter portrait; margin: 0.6in; }
+  @media print {
+    .sheet { padding: 0; max-width: none; }
+    body { font-size: 12px; }
+    .card { break-inside: avoid; }
+    tr { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <!-- SVG icon definitions -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <g id="i-eye">
+        <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/>
+        <circle cx="12" cy="12" r="2.6"/>
+      </g>
+      <g id="i-posture">
+        <circle cx="12" cy="4.5" r="2.2"/>
+        <path d="M12 7v7M12 14l-3.5 6M12 14l3.5 6M8 9.5h8"/>
+      </g>
+      <g id="i-muscle">
+        <path d="M4 12h3M17 12h3"/>
+        <rect x="6" y="8.5" width="2.6" height="7" rx="0.8"/>
+        <rect x="15.4" y="8.5" width="2.6" height="7" rx="0.8"/>
+        <path d="M8.6 12h6.8"/>
+      </g>
+      <g id="i-sound">
+        <path d="M4 14v-2a8 8 0 0 1 16 0v2"/>
+        <rect x="3" y="13.5" width="4" height="6" rx="1.4"/>
+        <rect x="17" y="13.5" width="4" height="6" rx="1.4"/>
+      </g>
+      <g id="i-attention">
+        <path d="M12 4a7 7 0 0 1 7 7c0 2-1 3.3-2 4.5-.8 1-1 1.7-1 2.5h-8c0-.8-.2-1.5-1-2.5-1-1.2-2-2.5-2-4.5a7 7 0 0 1 7-7z"/>
+        <path d="M10 21h4"/>
+      </g>
+      <g id="i-place">
+        <path d="M12 21s-6.5-5.4-6.5-10.2A6.5 6.5 0 0 1 12 4.5a6.5 6.5 0 0 1 6.5 6.3C18.5 15.6 12 21 12 21z"/>
+        <circle cx="12" cy="10.8" r="2.3"/>
+      </g>
+      <g id="i-reset">
+        <path d="M20 12a8 8 0 1 1-2.3-5.6"/>
+        <path d="M20 3.5V7h-3.5"/>
+      </g>
+      <g id="i-timer">
+        <circle cx="12" cy="13" r="7.5"/>
+        <path d="M12 9.5V13l2.5 2M10 2.5h4"/>
+      </g>
+      <g id="i-flip">
+        <path d="M7 8h10M17 8l-3-3M17 8l-3 3"/>
+        <path d="M17 16H7M7 16l3-3M7 16l3 3"/>
+      </g>
+    </defs>
+  </svg>
+
+  <header>
+    <p class="eyebrow">Recovery Between Deep-Work Blocks</p>
+    <h1><svg class="ic" style="width:24px;height:24px" viewBox="0 0 24 24"><use href="#i-flip"/></svg>The Contrast Break</h1>
+    <p class="sub">A real break inverts the load your work put on you. Find the axis that got strained, then do its opposite. Flip two or three at once for genuine recovery instead of a surface pause.</p>
+  </header>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="col-dim">Axis</th>
+        <th>While working (the strain)</th>
+        <th>Break = the opposite</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="dim"><span class="axis-label"><svg class="ic" viewBox="0 0 24 24"><use href="#i-eye"/></svg>Eyes</span></td>
+        <td class="work">Fixed near focus on a bright screen</td>
+        <td class="flip">Look far away, out a window, or <strong>close them</strong> for 2 min</td>
+      </tr>
+      <tr>
+        <td class="dim"><span class="axis-label"><svg class="ic" viewBox="0 0 24 24"><use href="#i-posture"/></svg>Posture</span></td>
+        <td class="work">Seated, still, slightly hunched</td>
+        <td class="flip">Stand up and <strong>walk</strong>, or lie flat and reset the spine</td>
+      </tr>
+      <tr>
+        <td class="dim"><span class="axis-label"><svg class="ic" viewBox="0 0 24 24"><use href="#i-muscle"/></svg>Big muscles</span></td>
+        <td class="work">Idle — only fingers moving</td>
+        <td class="flip"><strong>Stretch</strong>, take stairs, quick bodyweight movement</td>
+      </tr>
+      <tr>
+        <td class="dim"><span class="axis-label"><svg class="ic" viewBox="0 0 24 24"><use href="#i-sound"/></svg>Sound</span></td>
+        <td class="work">Silence, or low ambient hum</td>
+        <td class="flip">Add <strong>music or a podcast</strong> — switch the channel to audio</td>
+      </tr>
+      <tr>
+        <td class="dim"><span class="axis-label"><svg class="ic" viewBox="0 0 24 24"><use href="#i-attention"/></svg>Attention</span></td>
+        <td class="work">Narrow, effortful, single-threaded</td>
+        <td class="flip">Let the mind <strong>wander</strong> — diffuse, no goal</td>
+      </tr>
+      <tr>
+        <td class="dim"><span class="axis-label"><svg class="ic" viewBox="0 0 24 24"><use href="#i-place"/></svg>Place</span></td>
+        <td class="work">Same desk, same four walls</td>
+        <td class="flip">Change rooms or step <strong>outside</strong> for natural light</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p class="examples-h">Two Ready-Made Breaks</p>
+  <div class="examples">
+    <div class="card">
+      <h3><svg class="ic" viewBox="0 0 24 24"><use href="#i-reset"/></svg>The Full Reset</h3>
+      <p>Stand up, walk outside, eyes on the horizon, earbuds in with music. Hits every axis — posture, eyes, muscles, sound, place, attention — in one 10-minute loop.</p>
+      <span class="tag">6 / 6 axes flipped<span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></span>
+    </div>
+    <div class="card">
+      <h3><svg class="ic" viewBox="0 0 24 24"><use href="#i-timer"/></svg>The Desk-Bound 2-Minute</h3>
+      <p>Can't leave? Stand, close your eyes, roll the shoulders and neck, breathe slow. No screen, no goal. Flips eyes, posture, muscles, and attention without moving an inch.</p>
+      <span class="tag">4 / 6 axes flipped<span class="meter"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></span></span>
+    </div>
+  </div>
+
+  <footer>
+    <span>CONTRAST-BREAK-GUIDE</span>
+    <span>PRINT: LETTER · PORTRAIT</span>
+  </footer>
+</div>
+</body>
+</html>
